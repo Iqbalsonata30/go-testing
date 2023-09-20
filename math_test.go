@@ -31,3 +31,43 @@ func TestAdd(t *testing.T) {
 	})
 
 }
+
+func TestAdd_WithTestTable(t *testing.T) {
+	testCases := []struct {
+		name     string
+		a, b     int
+		expected int
+	}{
+		{
+			name:     "negative and negative",
+			a:        -1,
+			b:        -1,
+			expected: -2,
+		},
+		{
+			name:     "positive and negative",
+			a:        2,
+			b:        -1,
+			expected: 1,
+		},
+		{
+			name:     "positive and positive",
+			a:        3,
+			b:        5,
+			expected: 8,
+		},
+		{
+			name:     "negative and positive",
+			a:        -5,
+			b:        2,
+			expected: -3,
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			c := Add(tc.a, tc.b)
+			assert.Equal(t, tc.expected, c)
+		})
+	}
+
+}
