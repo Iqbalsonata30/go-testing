@@ -1,9 +1,8 @@
 package gotesting
 
 import (
-	"testing"
-
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestAbsolute(t *testing.T) {
