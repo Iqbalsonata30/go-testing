@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 func TestDefaultEngine_WithMaxSpeed(t *testing.T) {
@@ -92,4 +93,38 @@ func TestCar_WithSpeed(t *testing.T) {
 
 	}
 
+}
+
+type MockEngine struct {
+	mock.Mock
+}
+
+func (m *MockEngine) MaxSpeed() int {
+	args := m.Called()
+	return args.Get(0).(int)
+}
+
+func TestCar_Speed_WithMock(t *testing.T) {
+	t.Run("Just called once", func(t *testing.T) {
+		mock := new(MockEngine)
+		car := Car{
+			Speeder: mock,
+		}
+		mock.On("MaxSpeed").Return(9).Once()
+		speed := car.Speed()
+		assert.Equal(t, 20, speed)
+		mock.AssertExpectations(t)
+
+	})
+
+	t.Run("Just called 3 times", func(t *testing.T) {
+		mock := new(MockEngine)
+		car := Car{
+			Speeder: mock,
+		}
+		mock.On("MaxSpeed").Return(60).Times(3)
+		speed := car.Speed()
+		assert.Equal(t, 60, speed)
+		mock.AssertExpectations(t)
+	})
 }
