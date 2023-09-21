@@ -18,14 +18,13 @@ func NewCar(speeder Speeder) *Car {
 func (c Car) Speed() int {
 	defaultSpeed := 80
 
+	if c.Speeder.MaxSpeed() < 10 {
+		return 20
+	}
+
 	if defaultSpeed > c.Speeder.MaxSpeed() {
 		return c.Speeder.MaxSpeed()
 	}
-
-	if c.Speeder.MaxSpeed() < 10 {
-		return 10
-	}
-
 	return defaultSpeed
 
 }
