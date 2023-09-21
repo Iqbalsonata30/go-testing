@@ -23,7 +23,8 @@ func TestUploader_Upload(t *testing.T) {
 	u := Uploader{
 		svc: m,
 	}
-	m.On("Upload", mock.Anything).Return(&storage.Writer{})
+	m.On("NewWriter", mock.Anything).Return(&storage.Writer{})
 	err := u.Upload()
 	assert.NoError(t, err)
+	m.AssertExpectations(t)
 }

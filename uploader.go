@@ -16,15 +16,8 @@ type Uploader struct {
 }
 
 func (u Uploader) Upload() error {
-	bucket := "bucket-name"
-	object := "object-name"
-
 	ctx := context.Background()
-	str := new(storage.Client)
-	o := str.Bucket(bucket).Object(object)
-	o = o.If(storage.Conditions{DoesNotExist: true})
-
-	wc := o.NewWriter(ctx)
+	wc := u.svc.NewWriter(ctx)
 	fmt.Println(wc)
 	return nil
 }
